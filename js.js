@@ -8,6 +8,9 @@ const drawCard = document.querySelector('.randomcard');
 const showResults = document.querySelector('.results');
 const player0Score = document.querySelector('.score--0');
 const player1Score = document.querySelector('.score--1');
+const btnPlaceBet = document.querySelector('.placebet');
+const playerTotalCash = document.getElementById('totalcash');
+const bets = document.querySelector('.bets');
 
 // Functions
 
@@ -23,9 +26,15 @@ for (let i = 0; i < dealerRoll.length; i++) {
 }
 console.log('Dealer draws a ' + dealerScore);
 
-// Scores
+// Scores and money
 
 let currentScore = 0;
+let playerCash = 500;
+// let playerBet = 0;
+
+// Game state
+
+let noBets = false;
 
 // Random card pick
 
@@ -47,4 +56,25 @@ btnDraw.addEventListener('click', function () {
 
 btnNewGame.addEventListener('click', function () {
   console.log(btnNewGame.textContent);
+});
+
+// Place bet
+
+btnPlaceBet.addEventListener('click', function () {
+  if (playerCash <= 0) {
+    noBets = true;
+    console.log('Cash = ' + playerCash);
+  } else {
+    let playerBet = Number(prompt('Place your bet'));
+    if (playerBet > 500 || playerBet > playerCash) {
+      console.log("You don't have enough money");
+    } else {
+      playerCash -= playerBet;
+      bets.classList.remove('hidden');
+      bets.textContent = playerBet;
+      playerTotalCash.textContent = playerCash;
+      console.log('Remaining cash: ' + playerCash);
+      console.log('Player bets: ' + playerBet);
+    }
+  }
 });

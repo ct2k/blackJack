@@ -40,3 +40,8 @@
 .hidden {
   display: none;
 }
+
+.bets {
+  font-size: 24px;
+  text-align: center;
+}
