@@ -25,3 +25,12 @@
 .player > p {
   font-size: 24px;
 }
+
+.randomcard {
+  font-size: 38px;
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
