@@ -24,6 +24,7 @@ for (let i = 0; i < dealerRoll.length; i++) {
   };
   dealerDraw();
 }
+
 console.log('Dealer draws a ' + dealerScore);
 
 // Scores and money
@@ -35,22 +36,26 @@ let playerCash = 500;
 // Game state
 
 let noBets = false;
+let gameActive = false;
 
 // Random card pick
 
 btnDraw.addEventListener('click', function () {
-  const randomCard = Math.floor(Math.random() * 11) + 1;
-  drawCard.classList.remove('hidden');
-  drawCard.textContent = randomCard;
-  currentScore += randomCard;
-  player0Score.textContent = currentScore;
-  console.log('Player draws a ' + randomCard);
-  if (currentScore === 21) {
-    showResults.classList.remove('hidden');
-    showResults.textContent = 'You rolled a 21 and won the game!';
-  } else if (currentScore > 21) {
-    showResults.classList.remove('hidden');
-    showResults.textContent = 'You lose the game!';
+  if (gameActive === true) {
+    const randomCard = Math.floor(Math.random() * 11) + 1;
+    drawCard.classList.remove('hidden');
+    drawCard.textContent = randomCard;
+    currentScore += randomCard;
+    player0Score.textContent = currentScore;
+    console.log('Player draws a ' + randomCard);
+    if (currentScore === 21) {
+      showResults.classList.remove('hidden');
+      showResults.textContent = 'You rolled a 21 and won the game!';
+    } else if (currentScore > 21) {
+      gameActive = false;
+      showResults.classList.remove('hidden');
+      showResults.textContent = 'You lose the game!';
+    }
   }
 });
 
@@ -61,20 +66,24 @@ btnNewGame.addEventListener('click', function () {
 // Place bet
 
 btnPlaceBet.addEventListener('click', function () {
-  if (playerCash <= 0) {
-    noBets = true;
-    console.log('Cash = ' + playerCash);
-  } else {
-    let playerBet = Number(prompt('Place your bet'));
-    if (playerBet > 500 || playerBet > playerCash) {
-      console.log("You don't have enough money");
+  if (noBets !== true) {
+    if (playerCash <= 0) {
+      noBets = true;
+      console.log('Cash = ' + playerCash);
     } else {
-      playerCash -= playerBet;
-      bets.classList.remove('hidden');
-      bets.textContent = playerBet;
-      playerTotalCash.textContent = playerCash;
-      console.log('Remaining cash: ' + playerCash);
-      console.log('Player bets: ' + playerBet);
+      gameActive = true;
+      let playerBet = Number(prompt('Place your bet'));
+      if (playerBet > 500 || playerBet > playerCash) {
+        console.log("You don't have enough money");
+      } else {
+        playerCash -= playerBet;
+        bets.classList.remove('hidden');
+        bets.textContent = playerBet;
+        playerTotalCash.textContent = playerCash;
+        noBets = true;
+        console.log('Remaining cash: ' + playerCash);
+        console.log('Player bets: ' + playerBet);
+      }
     }
   }
 });
