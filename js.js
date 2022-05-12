@@ -11,6 +11,7 @@ const player1Score = document.querySelector('.score--1');
 const btnPlaceBet = document.querySelector('.placebet');
 const playerTotalCash = document.getElementById('totalcash');
 const bets = document.querySelector('.bets');
+const dealerTotalCash = document.getElementById('dealercash');
 
 // Functions
 
@@ -37,7 +38,8 @@ function dealerDraw(num1, num2) {
 
 let currentScore = 0;
 let playerCash = 500;
-// let playerBet = 0;
+let dealerCash = 0;
+let playerBet = 0;
 
 // Game state
 
@@ -57,10 +59,18 @@ btnDraw.addEventListener('click', function () {
     if (currentScore === 21) {
       showResults.classList.remove('hidden');
       showResults.textContent = 'You rolled a 21 and won the game!';
+      playerBet *= 1.5;
+      playerCash += playerBet;
+      playerTotalCash.textContent = playerCash;
+      console.log(playerCash);
     } else if (currentScore > 21) {
       gameActive = false;
       showResults.classList.remove('hidden');
       showResults.textContent = 'You lose the game!';
+      dealerCash = playerBet;
+      playerBet = 0;
+      dealerTotalCash.textContent = dealerCash;
+      console.log(dealerCash, playerBet);
     }
   }
 });
@@ -78,7 +88,7 @@ btnPlaceBet.addEventListener('click', function () {
       console.log('Cash = ' + playerCash);
     } else {
       gameActive = true;
-      let playerBet = Number(prompt('Place your bet'));
+      playerBet = Number(prompt('Place your bet'));
       if (playerBet > 500 || playerBet > playerCash) {
         console.log("You don't have enough money");
       } else {
