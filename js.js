@@ -17,15 +17,21 @@ const bets = document.querySelector('.bets');
 const dealerRoll = [Math.floor(Math.random() * 11) + 1, Math.floor(Math.random() * 11) + 1];
 let dealerScore = 0;
 
-for (let i = 0; i < dealerRoll.length; i++) {
-  const dealerDraw = function () {
-    if (dealerRoll[0]) player1Score.textContent = dealerScore; // Only show the first roll by the dealer
-    return (dealerScore += dealerRoll[i]);
-  };
-  dealerDraw();
-}
+// for (let i = 0; i < dealerRoll.length; i++) {
+//   const dealerDraw = function () {
+//     if (dealerRoll[0]) player1Score.textContent = dealerScore; // Only show the first roll by the dealer
+//     return (dealerScore += dealerRoll[i]);
+//   };
+//   dealerDraw();
+// }
 
-console.log('Dealer draws a ' + dealerScore);
+function dealerDraw(num1, num2) {
+  player1Score.textContent = num1;
+  console.log('Dealer first card: ' + num1);
+  dealerScore = num1 + num2;
+  console.log('Dealer cards: ' + num1, num2);
+  return dealerScore;
+}
 
 // Scores and money
 
@@ -83,6 +89,8 @@ btnPlaceBet.addEventListener('click', function () {
         noBets = true;
         console.log('Remaining cash: ' + playerCash);
         console.log('Player bets: ' + playerBet);
+        dealerDraw(dealerRoll[0], dealerRoll[1]);
+        console.log('Dealer draws a ' + dealerScore);
       }
     }
   }
