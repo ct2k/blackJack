@@ -165,5 +165,12 @@ btnDeal.addEventListener('click', function () {
     console.log('Player score = ' + currentScore);
     console.log('Dealer score = ' + dealerScore);
     gameActive = false;
+    if (currentScore === 21) {
+      playerCash += playerBet * 1.5;
+      playerTotalCash.textContent = playerCash;
+      showResults.classList.remove('hidden');
+      showResults.textContent = 'You rolled Blackjack and won the game!';
+      console.log(playerCash);
+    }
   }
 });
