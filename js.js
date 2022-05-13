@@ -28,12 +28,24 @@ let dealerScore = 0;
 //   dealerDraw();
 // }
 
-function dealerDraw(num1, num2) {
-  player1Score.textContent = num1;
-  console.log('Dealer first card: ' + num1);
-  dealerScore = num1 + num2;
-  console.log('Dealer cards: ' + num1, num2);
-  return dealerScore;
+// function dealerDraw(num1, num2) {
+//   player1Score.textContent = num1;
+//   console.log('Dealer first card: ' + num1);
+//   dealerScore = num1 + num2;
+//   console.log('Dealer cards: ' + num1, num2);
+//   return dealerScore;
+// }
+
+function dealerDraw(num1) {
+  num1 = num1[Math.floor(Math.random() * [num1.length])];
+  if (num1 === 1) {
+    num1 = 11;
+    dealerScore += num1;
+    return dealerScore;
+  } else {
+    dealerScore += num1;
+    return dealerScore;
+  }
 }
 
 // Scores and money
@@ -133,7 +145,9 @@ btnPlaceBet.addEventListener('click', function () {
         noBets = true;
         console.log('Remaining cash: ' + playerCash);
         console.log('Player bets: ' + playerBet);
-        dealerDraw(dealerRoll[0], dealerRoll[1]);
+        // dealerDraw(dealerRoll[0], dealerRoll[1]);
+        dealerDraw(cardsArray);
+        player1Score.textContent = dealerScore;
         console.log('Dealer draws a ' + dealerScore);
         playerDraw(cardsArray);
         console.log('Player draws a ' + currentScore);
@@ -147,7 +161,9 @@ btnPlaceBet.addEventListener('click', function () {
 btnDeal.addEventListener('click', function () {
   if (gameActive === true) {
     playerDraw(cardsArray);
-    console.log(currentScore);
+    dealerDraw(cardsArray);
+    console.log('Player score = ' + currentScore);
+    console.log('Dealer score = ' + dealerScore);
     gameActive = false;
   }
 });
