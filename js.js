@@ -59,6 +59,7 @@ let playerBet = 0;
 
 let noBets = false;
 let gameActive = false;
+let allowHit = false;
 
 // Random card pick
 
@@ -165,11 +166,39 @@ btnDeal.addEventListener('click', function () {
     console.log('Player score = ' + currentScore);
     console.log('Dealer score = ' + dealerScore);
     gameActive = false;
+    allowHit = true;
     if (currentScore === 21) {
       playerCash += playerBet * 1.5;
       playerTotalCash.textContent = playerCash;
       showResults.classList.remove('hidden');
       showResults.textContent = 'You rolled Blackjack and won the game!';
+      console.log(playerCash);
+    }
+  }
+});
+
+// Hit
+
+btnHit.addEventListener('click', function () {
+  if (allowHit === true) {
+    playerDraw(cardsArray);
+    player0Score.textContent = currentScore;
+    if (currentScore > 21) {
+      showResults.classList.remove('hidden');
+      showResults.textContent = 'BUST! You lose the game';
+      dealerCash = playerBet;
+      bets.textContent = 0;
+      dealerTotalCash.textContent = playerBet;
+      gameActive = false;
+      allowHit = false;
+    } else if (currentScore === 21) {
+      playerCash += playerBet;
+      playerTotalCash.textContent = playerCash;
+      bets.textContent = 0;
+      showResults.classList.remove('hidden');
+      showResults.textContent = 'You rolled 21 and won the pot!';
+      gameActive = false;
+      allowHit = false;
       console.log(playerCash);
     }
   }
