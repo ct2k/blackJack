@@ -12,6 +12,8 @@ const btnPlaceBet = document.querySelector('.placebet');
 const playerTotalCash = document.getElementById('totalcash');
 const bets = document.querySelector('.bets');
 const dealerTotalCash = document.getElementById('dealercash');
+const btnDeal = document.querySelector('.deal');
+const btnHit = document.querySelector('.hit');
 
 // Functions
 
@@ -47,6 +49,38 @@ let noBets = false;
 let gameActive = false;
 
 // Random card pick
+
+let ace;
+let aceChoice;
+const jack = 10;
+const queen = 10;
+const king = 10;
+const cardsArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, jack, queen, king];
+const dealCard = cardsArray[Math.floor(Math.random() * [cardsArray.length])];
+
+function playerDraw(num1) {
+  num1 = num1[Math.floor(Math.random() * [num1.length])];
+  if (num1 === 1 || num1 === 11) {
+    let decision = Number(prompt('Pick 1 or 11 for the ace'));
+    if (decision === 1) {
+      currentScore += decision;
+      player0Score.textContent = currentScore;
+      console.log(num1);
+      return currentScore;
+    } else {
+      decision = 11;
+      currentScore += decision;
+      player0Score.textContent = currentScore;
+      console.log(num1);
+      return currentScore;
+    }
+  } else {
+    currentScore += num1;
+    player0Score.textContent = currentScore;
+    console.log(num1);
+    return currentScore;
+  }
+}
 
 btnDraw.addEventListener('click', function () {
   if (gameActive === true) {
@@ -101,7 +135,19 @@ btnPlaceBet.addEventListener('click', function () {
         console.log('Player bets: ' + playerBet);
         dealerDraw(dealerRoll[0], dealerRoll[1]);
         console.log('Dealer draws a ' + dealerScore);
+        playerDraw(cardsArray);
+        console.log('Player draws a ' + currentScore);
       }
     }
+  }
+});
+
+// Deal - round 2
+
+btnDeal.addEventListener('click', function () {
+  if (gameActive === true) {
+    playerDraw(cardsArray);
+    console.log(currentScore);
+    gameActive = false;
   }
 });
