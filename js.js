@@ -14,6 +14,7 @@ const bets = document.querySelector('.bets');
 const dealerTotalCash = document.getElementById('dealercash');
 const btnDeal = document.querySelector('.deal');
 const btnHit = document.querySelector('.hit');
+const btnStand = document.querySelector('.stand');
 
 // Functions
 
@@ -200,6 +201,61 @@ btnHit.addEventListener('click', function () {
       gameActive = false;
       allowHit = false;
       console.log(playerCash);
+    }
+  }
+});
+
+// Stand
+
+btnStand.addEventListener('click', function () {
+  if (allowHit === true) {
+    allowHit = false;
+    console.log('Player score: ' + currentScore);
+    player1Score.textContent = dealerScore;
+    if (dealerScore <= 16) {
+      dealerDraw(cardsArray);
+      player1Score.textContent = dealerScore;
+      console.log('Dealer score ' + dealerScore);
+      if (dealerScore > 21) {
+        showResults.classList.remove('hidden');
+        showResults.textContent = 'You beat the dealer!';
+        playerCash += playerBet;
+        playerTotalCash.textContent = playerCash;
+        bets.textContent = 0;
+      } else if (dealerScore < 21 && dealerScore > currentScore) {
+        showResults.classList.remove('hidden');
+        showResults.textContent = 'The dealer won the round!';
+        dealerCash += playerBet;
+        dealerTotalCash.textContent = dealerCash;
+        bets.textContent = 0;
+      } else if (dealerScore < 21 && dealerScore < currentScore) {
+        showResults.classList.remove('hidden');
+        showResults.textContent = 'You beat the dealer!';
+        playerCash += playerBet;
+        playerTotalCash.textContent = playerCash;
+        bets.textContent = 0;
+      } else if (dealerScore === currentScore) {
+        showResults.classList.remove('hidden');
+        showResults.textContent = 'Tie game. No winner!';
+      } else {
+        showResults.classList.remove('hidden');
+        showResults.textContent = 'The dealer won the round!';
+        dealerCash += playerBet;
+        dealerTotalCash.textContent = dealerCash;
+        bets.textContent = 0;
+      }
+    } else if (dealerScore > currentScore && !(dealerScore > 21)) {
+      showResults.classList.remove('hidden');
+      showResults.textContent = 'The dealer won the round!';
+      dealerCash += playerBet;
+      dealerTotalCash.textContent = dealerCash;
+      bets.textContent = 0;
+    } else {
+      showResults.classList.remove('hidden');
+      showResults.textContent = 'You beat the dealer!';
+      playerCash += playerBet;
+      playerTotalCash.textContent = playerCash;
+      bets.textContent = 0;
     }
   }
 });
