@@ -79,19 +79,19 @@ function playerDraw(num1) {
     if (decision === 1) {
       currentScore += decision;
       player0Score.textContent = currentScore;
-      console.log(num1);
+      // console.log('Player drew a: ' + num1);
       return currentScore;
     } else {
       decision = 11;
       currentScore += decision;
       player0Score.textContent = currentScore;
-      console.log(num1);
+      // console.log('Player drew a: ' + num1);
       return currentScore;
     }
   } else {
     currentScore += num1;
     player0Score.textContent = currentScore;
-    console.log(num1);
+    // console.log('Player draws a ' + num1);
     return currentScore;
   }
 }
@@ -124,7 +124,13 @@ function playerDraw(num1) {
 // });
 
 btnNewGame.addEventListener('click', function () {
-  console.log(btnNewGame.textContent);
+  bets.classList.add('hidden');
+  showResults.classList.add('hidden');
+  player0Score.textContent = 0;
+  player1Score.textContent = 0;
+  playerBet = 0;
+  noBets = false;
+  console.log('You pressed the new game button!');
 });
 
 // Place bet
@@ -132,6 +138,7 @@ btnNewGame.addEventListener('click', function () {
 btnPlaceBet.addEventListener('click', function () {
   if (noBets !== true) {
     if (playerCash <= 0) {
+      // Can't start a new
       noBets = true;
       console.log('Cash = ' + playerCash);
     } else {
@@ -139,6 +146,7 @@ btnPlaceBet.addEventListener('click', function () {
       playerBet = Number(prompt('Place your bet'));
       if (playerBet > 500 || playerBet > playerCash) {
         console.log("You don't have enough money");
+        gameActive = false;
       } else {
         playerCash -= playerBet;
         bets.classList.remove('hidden');
@@ -165,7 +173,7 @@ btnDeal.addEventListener('click', function () {
     playerDraw(cardsArray);
     dealerDraw(cardsArray);
     console.log('Player score = ' + currentScore);
-    console.log('Dealer score = ' + dealerScore);
+    console.log('Dealer score = ' + dealerScore + ' (second roll hidden)');
     gameActive = false;
     allowHit = true;
     if (currentScore === 21) {
@@ -215,7 +223,7 @@ btnStand.addEventListener('click', function () {
     if (dealerScore <= 16) {
       dealerDraw(cardsArray);
       player1Score.textContent = dealerScore;
-      console.log('Dealer score ' + dealerScore);
+      console.log('Dealer score: ' + dealerScore);
       if (dealerScore > 21) {
         showResults.classList.remove('hidden');
         showResults.textContent = 'You beat the dealer!';
@@ -250,6 +258,9 @@ btnStand.addEventListener('click', function () {
       dealerCash += playerBet;
       dealerTotalCash.textContent = dealerCash;
       bets.textContent = 0;
+    } else if (dealerScore === currentScore) {
+      showResults.classList.remove('hidden');
+      showResults.textContent = 'Tie game. No winner!';
     } else {
       showResults.classList.remove('hidden');
       showResults.textContent = 'You beat the dealer!';
