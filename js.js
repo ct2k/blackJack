@@ -55,6 +55,7 @@ let currentScore = 0;
 let playerCash = 500;
 let dealerCash = 0;
 let playerBet = 0;
+let cashPot = 0;
 
 // Game state
 
@@ -124,7 +125,7 @@ function playerDraw(num1) {
 // });
 
 btnNewGame.addEventListener('click', function () {
-  bets.classList.add('hidden');
+  // bets.classList.add('hidden');
   showResults.classList.add('hidden');
   player0Score.textContent = 0;
   player1Score.textContent = 0;
@@ -160,6 +161,8 @@ btnPlaceBet.addEventListener('click', function () {
       } else {
         showResults.classList.add('hidden');
         playerCash -= playerBet;
+        playerBet += cashPot;
+        cashPot = 0;
         bets.classList.remove('hidden');
         bets.textContent = playerBet;
         playerTotalCash.textContent = playerCash;
@@ -256,6 +259,8 @@ btnStand.addEventListener('click', function () {
       } else if (dealerScore === currentScore) {
         showResults.classList.remove('hidden');
         showResults.textContent = 'Tie game. No winner!';
+        cashPot += playerBet;
+        bets.textContent = cashPot;
       } else {
         showResults.classList.remove('hidden');
         showResults.textContent = 'The dealer won the round!';
@@ -272,6 +277,8 @@ btnStand.addEventListener('click', function () {
     } else if (dealerScore === currentScore) {
       showResults.classList.remove('hidden');
       showResults.textContent = 'Tie game. No winner!';
+      cashPot += playerBet;
+      bets.textContent = cashPot;
     } else {
       showResults.classList.remove('hidden');
       showResults.textContent = 'You beat the dealer!';
