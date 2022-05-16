@@ -2,7 +2,7 @@
 
 // Selecting elements
 
-const btnDraw = document.querySelector('.drawcard');
+// const btnDraw = document.querySelector('.drawcard');
 const btnNewGame = document.querySelector('.newgame');
 const drawCard = document.querySelector('.randomcard');
 const showResults = document.querySelector('.results');
@@ -96,32 +96,32 @@ function playerDraw(num1) {
   }
 }
 
-btnDraw.addEventListener('click', function () {
-  if (gameActive === true) {
-    const randomCard = Math.floor(Math.random() * 11) + 1;
-    drawCard.classList.remove('hidden');
-    drawCard.textContent = randomCard;
-    currentScore += randomCard;
-    player0Score.textContent = currentScore;
-    console.log('Player draws a ' + randomCard);
-    if (currentScore === 21) {
-      showResults.classList.remove('hidden');
-      showResults.textContent = 'You rolled a 21 and won the game!';
-      playerBet *= 1.5;
-      playerCash += playerBet;
-      playerTotalCash.textContent = playerCash;
-      console.log(playerCash);
-    } else if (currentScore > 21) {
-      gameActive = false;
-      showResults.classList.remove('hidden');
-      showResults.textContent = 'You lose the game!';
-      dealerCash = playerBet;
-      playerBet = 0;
-      dealerTotalCash.textContent = dealerCash;
-      console.log(dealerCash, playerBet);
-    }
-  }
-});
+// btnDraw.addEventListener('click', function () {
+//   if (gameActive === true) {
+//     const randomCard = Math.floor(Math.random() * 11) + 1;
+//     drawCard.classList.remove('hidden');
+//     drawCard.textContent = randomCard;
+//     currentScore += randomCard;
+//     player0Score.textContent = currentScore;
+//     console.log('Player draws a ' + randomCard);
+//     if (currentScore === 21) {
+//       showResults.classList.remove('hidden');
+//       showResults.textContent = 'You rolled a 21 and won the game!';
+//       playerBet *= 1.5;
+//       playerCash += playerBet;
+//       playerTotalCash.textContent = playerCash;
+//       console.log(playerCash);
+//     } else if (currentScore > 21) {
+//       gameActive = false;
+//       showResults.classList.remove('hidden');
+//       showResults.textContent = 'You lose the game!';
+//       dealerCash = playerBet;
+//       playerBet = 0;
+//       dealerTotalCash.textContent = dealerCash;
+//       console.log(dealerCash, playerBet);
+//     }
+//   }
+// });
 
 btnNewGame.addEventListener('click', function () {
   console.log(btnNewGame.textContent);
