@@ -129,6 +129,8 @@ btnNewGame.addEventListener('click', function () {
   player0Score.textContent = 0;
   player1Score.textContent = 0;
   playerBet = 0;
+  currentScore = 0;
+  dealerScore = 0;
   noBets = false;
   console.log('You pressed the new game button!');
 });
@@ -140,6 +142,8 @@ btnPlaceBet.addEventListener('click', function () {
     if (playerCash <= 0) {
       // Can't start a new
       noBets = true;
+      showResults.classList.remove('hidden');
+      showResults.textContent = "You don't have enough cash to play!";
       console.log('Cash = ' + playerCash);
     } else {
       gameActive = true;
