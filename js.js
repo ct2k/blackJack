@@ -145,9 +145,16 @@ btnPlaceBet.addEventListener('click', function () {
       gameActive = true;
       playerBet = Number(prompt('Place your bet'));
       if (playerBet > 500 || playerBet > playerCash) {
-        console.log("You don't have enough money");
+        // console.log("You don't have enough money");
+        showResults.classList.remove('hidden');
+        showResults.textContent = "You don't have enough money";
+        gameActive = false;
+      } else if (playerBet === null || playerBet <= 0 || !playerBet) {
+        showResults.classList.remove('hidden');
+        showResults.textContent = "You didn't place a bet";
         gameActive = false;
       } else {
+        showResults.classList.add('hidden');
         playerCash -= playerBet;
         bets.classList.remove('hidden');
         bets.textContent = playerBet;
