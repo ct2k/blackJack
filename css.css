@@ -7,7 +7,7 @@
 .maincontent {
   display: flex;
   justify-content: center;
-  height: 500px;
+  height: auto;
 }
 
 .button {
@@ -44,4 +44,11 @@
 .bets {
   font-size: 24px;
   text-align: center;
+}
+
+.card {
+  height: 400px;
+  width: auto;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }

@@ -15,6 +15,10 @@ const dealerTotalCash = document.getElementById('dealercash');
 const btnDeal = document.querySelector('.deal');
 const btnHit = document.querySelector('.hit');
 const btnStand = document.querySelector('.stand');
+const player0FirstCard = document.querySelector('.first--0');
+const player0SecondCard = document.querySelector('.second--0');
+const player1FirstCard = document.querySelector('.first--1');
+const player1SecondCard = document.querySelector('.second--1');
 
 // Functions
 
@@ -37,17 +41,21 @@ let dealerScore = 0;
 //   return dealerScore;
 // }
 
-function dealerDraw(num1) {
+function dealerDraw(num1, num2) {
   num1 = num1[Math.floor(Math.random() * [num1.length])];
-  if (num1 === 1) {
+  if (num1 === 1 || num1 === 11) {
     num1 = 11;
     dealerScore += num1;
+    num2.src = `images/PNG-cards-1.3/ace_of_${randomizeSuit(cardSuit)}.png`;
     return dealerScore;
   } else {
     dealerScore += num1;
+    num2.src = `images/PNG-cards-1.3/${num1}_of_${randomizeSuit(cardSuit)}.png`;
     return dealerScore;
   }
 }
+
+const randomizeSuit = num2 => num2[Math.floor(Math.random() * [num2.length])];
 
 // Scores and money
 
@@ -72,24 +80,28 @@ const queen = 10;
 const king = 10;
 const cardsArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, jack, queen, king];
 const dealCard = cardsArray[Math.floor(Math.random() * [cardsArray.length])];
+const cardSuit = ['hearts', 'diamonds', 'spades', 'clubs'];
 
-function playerDraw(num1) {
+function playerDraw(num1, num2) {
   num1 = num1[Math.floor(Math.random() * [num1.length])];
   if (num1 === 1 || num1 === 11) {
     let decision = Number(prompt('Pick 1 or 11 for the ace'));
     if (decision === 1) {
       currentScore += decision;
       player0Score.textContent = currentScore;
+      num2.src = `images/PNG-cards-1.3/ace_of_${randomizeSuit(cardSuit)}.png`;
       // console.log('Player drew a: ' + num1);
       return currentScore;
     } else {
       decision = 11;
       currentScore += decision;
       player0Score.textContent = currentScore;
+      num2.src = `images/PNG-cards-1.3/ace_of_${randomizeSuit(cardSuit)}.png`;
       // console.log('Player drew a: ' + num1);
       return currentScore;
     }
   } else {
+    num2.src = `images/PNG-cards-1.3/${num1}_of_${randomizeSuit(cardSuit)}.png`;
     currentScore += num1;
     player0Score.textContent = currentScore;
     // console.log('Player draws a ' + num1);
@@ -133,6 +145,10 @@ btnNewGame.addEventListener('click', function () {
   currentScore = 0;
   dealerScore = 0;
   noBets = false;
+  player0FirstCard.classList.add('hidden');
+  player0SecondCard.classList.add('hidden');
+  player1FirstCard.classList.add('hidden');
+  player1SecondCard.classList.add('hidden');
   console.log('You pressed the new game button!');
 });
 
@@ -169,11 +185,12 @@ btnPlaceBet.addEventListener('click', function () {
         noBets = true;
         console.log('Remaining cash: ' + playerCash);
         console.log('Player bets: ' + playerBet);
-        // dealerDraw(dealerRoll[0], dealerRoll[1]);
-        dealerDraw(cardsArray);
+        player1FirstCard.classList.remove('hidden');
+        dealerDraw(cardsArray, player1FirstCard);
         player1Score.textContent = dealerScore;
         console.log('Dealer draws a ' + dealerScore);
-        playerDraw(cardsArray);
+        player0FirstCard.classList.remove('hidden');
+        playerDraw(cardsArray, player0FirstCard);
         console.log('Player draws a ' + currentScore);
       }
     }
@@ -184,8 +201,9 @@ btnPlaceBet.addEventListener('click', function () {
 
 btnDeal.addEventListener('click', function () {
   if (gameActive === true) {
-    playerDraw(cardsArray);
-    dealerDraw(cardsArray);
+    player0SecondCard.classList.remove('hidden');
+    playerDraw(cardsArray, player0SecondCard);
+    dealerDraw(cardsArray, player1SecondCard); // Dealer's second card is hidden
     console.log('Player score = ' + currentScore);
     console.log('Dealer score = ' + dealerScore + ' (second roll hidden)');
     gameActive = false;
@@ -204,7 +222,7 @@ btnDeal.addEventListener('click', function () {
 
 btnHit.addEventListener('click', function () {
   if (allowHit === true) {
-    playerDraw(cardsArray);
+    playerDraw(cardsArray, player0SecondCard);
     player0Score.textContent = currentScore;
     if (currentScore > 21) {
       showResults.classList.remove('hidden');
@@ -235,7 +253,7 @@ btnStand.addEventListener('click', function () {
     console.log('Player score: ' + currentScore);
     player1Score.textContent = dealerScore;
     if (dealerScore <= 16) {
-      dealerDraw(cardsArray);
+      dealerDraw(cardsArray, player1SecondCard);
       player1Score.textContent = dealerScore;
       console.log('Dealer score: ' + dealerScore);
       if (dealerScore > 21) {
@@ -244,12 +262,14 @@ btnStand.addEventListener('click', function () {
         playerCash += playerBet;
         playerTotalCash.textContent = playerCash;
         bets.textContent = 0;
+        player1SecondCard.classList.remove('hidden');
       } else if (dealerScore < 21 && dealerScore > currentScore) {
         showResults.classList.remove('hidden');
         showResults.textContent = 'The dealer won the round!';
         dealerCash += playerBet;
         dealerTotalCash.textContent = dealerCash;
         bets.textContent = 0;
+        player1SecondCard.classList.remove('hidden');
       } else if (dealerScore < 21 && dealerScore < currentScore) {
         showResults.classList.remove('hidden');
         showResults.textContent = 'You beat the dealer!';
@@ -261,12 +281,14 @@ btnStand.addEventListener('click', function () {
         showResults.textContent = 'Tie game. No winner!';
         cashPot += playerBet;
         bets.textContent = cashPot;
+        player1SecondCard.classList.remove('hidden');
       } else {
         showResults.classList.remove('hidden');
         showResults.textContent = 'The dealer won the round!';
         dealerCash += playerBet;
         dealerTotalCash.textContent = dealerCash;
         bets.textContent = 0;
+        player1SecondCard.classList.remove('hidden');
       }
     } else if (dealerScore > currentScore && !(dealerScore > 21)) {
       showResults.classList.remove('hidden');
@@ -274,17 +296,20 @@ btnStand.addEventListener('click', function () {
       dealerCash += playerBet;
       dealerTotalCash.textContent = dealerCash;
       bets.textContent = 0;
+      player1SecondCard.classList.remove('hidden');
     } else if (dealerScore === currentScore) {
       showResults.classList.remove('hidden');
       showResults.textContent = 'Tie game. No winner!';
       cashPot += playerBet;
       bets.textContent = cashPot;
+      player1SecondCard.classList.remove('hidden');
     } else {
       showResults.classList.remove('hidden');
       showResults.textContent = 'You beat the dealer!';
       playerCash += playerBet;
       playerTotalCash.textContent = playerCash;
       bets.textContent = 0;
+      player1SecondCard.classList.remove('hidden');
     }
   }
 });
