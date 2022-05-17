@@ -246,7 +246,14 @@ btnDeal.addEventListener('click', function () {
       playerTotalCash.textContent = playerCash;
       showResults.classList.remove('hidden');
       showResults.textContent = 'You rolled Blackjack and won the game!';
+      allowHit = false;
       console.log(playerCash);
+    } else if (currentScore > 21) {
+      showResults.classList.remove('hidden');
+      showResults.textContent = 'BUST! You lose the game';
+      allowHit = false;
+      cashPot += playerBet;
+      bets.textContent = cashPot;
     }
   }
 });
