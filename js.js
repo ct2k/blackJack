@@ -48,6 +48,21 @@ function dealerDraw(num1, num2) {
     dealerScore += num1;
     num2.src = `images/PNG-cards-1.3/ace_of_${randomizeSuit(cardSuit)}.png`;
     return dealerScore;
+  } else if (num1 === jack) {
+    jack = 10;
+    dealerScore += jack;
+    num2.src = `images/PNG-cards-1.3/jack_of_${randomizeSuit(cardSuit)}2.png`;
+    return dealerScore;
+  } else if (num1 === queen) {
+    queen = 10;
+    dealerScore += queen;
+    num2.src = `images/PNG-cards-1.3/queen_of_${randomizeSuit(cardSuit)}2.png`;
+    return dealerScore;
+  } else if (num1 === king) {
+    king = 10;
+    dealerScore += king;
+    num2.src = `images/PNG-cards-1.3/king_of_${randomizeSuit(cardSuit)}2.png`;
+    return dealerScore;
   } else {
     dealerScore += num1;
     num2.src = `images/PNG-cards-1.3/${num1}_of_${randomizeSuit(cardSuit)}.png`;
@@ -75,9 +90,9 @@ let allowHit = false;
 
 let ace;
 let aceChoice;
-const jack = 10;
-const queen = 10;
-const king = 10;
+let jack;
+let queen;
+let king;
 const cardsArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, jack, queen, king];
 const dealCard = cardsArray[Math.floor(Math.random() * [cardsArray.length])];
 const cardSuit = ['hearts', 'diamonds', 'spades', 'clubs'];
@@ -100,6 +115,24 @@ function playerDraw(num1, num2) {
       // console.log('Player drew a: ' + num1);
       return currentScore;
     }
+  } else if (num1 === jack) {
+    jack = 10;
+    currentScore += jack;
+    player0Score.textContent = currentScore;
+    num2.src = `images/PNG-cards-1.3/jack_of_${randomizeSuit(cardSuit)}2.png`;
+    return currentScore;
+  } else if (num1 === queen) {
+    queen = 10;
+    currentScore += queen;
+    player0Score.textContent = currentScore;
+    num2.src = `images/PNG-cards-1.3/queen_of_${randomizeSuit(cardSuit)}2.png`;
+    return currentScore;
+  } else if (num1 === king) {
+    king = 10;
+    currentScore += king;
+    player0Score.textContent = currentScore;
+    num2.src = `images/PNG-cards-1.3/king_of_${randomizeSuit(cardSuit)}2.png`;
+    return currentScore;
   } else {
     num2.src = `images/PNG-cards-1.3/${num1}_of_${randomizeSuit(cardSuit)}.png`;
     currentScore += num1;
@@ -276,6 +309,7 @@ btnStand.addEventListener('click', function () {
         playerCash += playerBet;
         playerTotalCash.textContent = playerCash;
         bets.textContent = 0;
+        player1SecondCard.classList.remove('hidden');
       } else if (dealerScore === currentScore) {
         showResults.classList.remove('hidden');
         showResults.textContent = 'Tie game. No winner!';
