@@ -43,24 +43,24 @@ let dealerScore = 0;
 
 function dealerDraw(num1, num2) {
   num1 = num1[Math.floor(Math.random() * [num1.length])];
-  if (num1 === 1 || num1 === 11) {
+  if (num1 === 1) {
     num1 = 11;
     dealerScore += num1;
     num2.src = `images/PNG-cards-1.3/ace_of_${randomizeSuit(cardSuit)}.png`;
     return dealerScore;
-  } else if (num1 === jack) {
-    jack = 10;
-    dealerScore += jack;
+  } else if (num1 === 11) {
+    num1 = 10;
+    dealerScore += num1;
     num2.src = `images/PNG-cards-1.3/jack_of_${randomizeSuit(cardSuit)}2.png`;
     return dealerScore;
-  } else if (num1 === queen) {
-    queen = 10;
-    dealerScore += queen;
+  } else if (num1 === 12) {
+    num1 = 10;
+    dealerScore += num1;
     num2.src = `images/PNG-cards-1.3/queen_of_${randomizeSuit(cardSuit)}2.png`;
     return dealerScore;
-  } else if (num1 === king) {
-    king = 10;
-    dealerScore += king;
+  } else if (num1 === 13) {
+    num1 = 10;
+    dealerScore += num1;
     num2.src = `images/PNG-cards-1.3/king_of_${randomizeSuit(cardSuit)}2.png`;
     return dealerScore;
   } else {
@@ -125,18 +125,18 @@ let allowHit = false;
 
 // Random card pick
 
-let ace;
-let aceChoice;
-let jack;
-let queen;
-let king;
-const cardsArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, jack, queen, king];
+// let ace;
+// let aceChoice;
+// let jack;
+// let queen;
+// let king;
+const cardsArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 const dealCard = cardsArray[Math.floor(Math.random() * [cardsArray.length])];
 const cardSuit = ['hearts', 'diamonds', 'spades', 'clubs'];
 
 function playerDraw(num1, num2) {
   num1 = num1[Math.floor(Math.random() * [num1.length])];
-  if (num1 === 1 || num1 === 11) {
+  if (num1 === 1) {
     let decision = Number(prompt('Pick 1 or 11 for the ace'));
     if (decision === 1) {
       currentScore += decision;
@@ -152,21 +152,21 @@ function playerDraw(num1, num2) {
       // console.log('Player drew a: ' + num1);
       return currentScore;
     }
-  } else if (num1 === jack) {
-    jack = 10;
-    currentScore += jack;
+  } else if (num1 === 11) {
+    num1 = 10;
+    currentScore += num1;
     player0Score.textContent = currentScore;
     num2.src = `images/PNG-cards-1.3/jack_of_${randomizeSuit(cardSuit)}2.png`;
     return currentScore;
-  } else if (num1 === queen) {
-    queen = 10;
-    currentScore += queen;
+  } else if (num1 === 12) {
+    num1 = 10;
+    currentScore += num1;
     player0Score.textContent = currentScore;
     num2.src = `images/PNG-cards-1.3/queen_of_${randomizeSuit(cardSuit)}2.png`;
     return currentScore;
-  } else if (num1 === king) {
-    king = 10;
-    currentScore += king;
+  } else if (num1 === 13) {
+    num1 = 10;
+    currentScore += num1;
     player0Score.textContent = currentScore;
     num2.src = `images/PNG-cards-1.3/king_of_${randomizeSuit(cardSuit)}2.png`;
     return currentScore;
@@ -271,10 +271,10 @@ btnPlaceBet.addEventListener('click', function () {
 
 btnDeal.addEventListener('click', function () {
   if (gameActive === true) {
-    player0SecondCard.classList.remove('hidden');
     playerDraw(cardsArray, player0SecondCard);
-    dealerDraw(cardsArray, player1SecondCard); // Dealer's second card is drawn, but hidden
+    player0SecondCard.classList.remove('hidden');
     console.log('Player score = ' + currentScore);
+    dealerDraw(cardsArray, player1SecondCard); // Dealer's second card is drawn, but hidden
     console.log('Dealer score = ' + dealerScore + ' (second roll hidden)');
     gameActive = false;
     allowHit = true;
