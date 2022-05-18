@@ -198,7 +198,7 @@ btnPlaceBet.addEventListener('click', function () {
     } else {
       gameActive = true;
       playerBet = Number(prompt('Place your bet'));
-      if (playerBet > 500 || playerBet > playerCash) {
+      if (playerBet > playerCash) {
         // console.log("You don't have enough money");
         showResults.classList.remove('hidden');
         showResults.textContent = "You don't have enough money";
@@ -247,6 +247,7 @@ btnDeal.addEventListener('click', function () {
       showResults.classList.remove('hidden');
       showResults.textContent = 'You rolled Blackjack and won the game!';
       allowHit = false;
+      bets.textContent = 0;
       console.log(playerCash);
     } else if (currentScore > 21) {
       showResults.classList.remove('hidden');
@@ -280,7 +281,7 @@ btnHit.addEventListener('click', function () {
       showResults.textContent = 'You rolled 21 and won the pot!';
       gameActive = false;
       allowHit = false;
-      console.log(playerCash);
+      console.log('Player cash: ' + playerCash);
     }
   }
 });
